@@ -1,0 +1,37 @@
+{
+  "_comment": "One entry for the user_profiles[] array in ~/.config/envision/envision.json. Replace <UUID> with a fresh UUID and <ENVISION_SHARE> with ~/.local/share/envision (absolute). add-profile.py does this for you.",
+  "uuid": "<UUID>",
+  "name": "CV1 Fusion (RiftLinux 0.1.5)",
+  "xrservice_type": "Monado",
+  "xrservice_path": "<ENVISION_SHARE>/<UUID>/xrservice",
+  "xrservice_repo": "https://github.com/AIIX/RiftLinux.git",
+  "xrservice_branch": "v0.1.5",
+  "xrservice_cmake_flags": {},
+  "opencomposite_path": "",
+  "opencomposite_repo": null,
+  "opencomposite_branch": null,
+  "ovr_comp": {
+    "mod_type": "Xrizer",
+    "repo": "https://github.com/Supreeeme/xrizer",
+    "branch": "main",
+    "path": "<ENVISION_SHARE>/<UUID>/xrizer"
+  },
+  "features": {
+    "libsurvive": { "feature_type": "Libsurvive", "enabled": false, "path": null, "repo": null, "branch": null },
+    "basalt":     { "feature_type": "Basalt",     "enabled": false, "path": null, "repo": null, "branch": null },
+    "openhmd":    { "feature_type": "OpenHmd",    "enabled": false, "path": null, "repo": null, "branch": null },
+    "mercury_enabled": false
+  },
+  "environment": {
+    "LD_LIBRARY_PATH": "<ENVISION_SHARE>/prefixes/<UUID>/lib:<ENVISION_SHARE>/prefixes/<UUID>/lib64",
+    "U_PACING_COMP_PRESENT_TO_DISPLAY_OFFSET_MS": "12",
+    "ORT_DISABLE_TELEMETRY": "1"
+  },
+  "prefix": "<ENVISION_SHARE>/prefixes/<UUID>",
+  "is_system_profile": false,
+  "editable": true,
+  "pull_on_build": false,
+  "lighthouse_driver": "Vive",
+  "xrservice_launch_options": "",
+  "skip_dependency_check": false
+}
