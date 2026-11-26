@@ -1,11 +1,11 @@
 {
   "_comment": "One entry for the user_profiles[] array in ~/.config/envision/envision.json. Replace <UUID> with a fresh UUID and <ENVISION_SHARE> with ~/.local/share/envision (absolute). add-profile.py does this for you.",
   "uuid": "<UUID>",
-  "name": "CV1 Fusion (RiftLinux 0.1.5)",
+  "name": "CV1 Fusion (RiftLinux 0.1.6)",
   "xrservice_type": "Monado",
   "xrservice_path": "<ENVISION_SHARE>/<UUID>/xrservice",
   "xrservice_repo": "https://github.com/AIIX/RiftLinux.git",
-  "xrservice_branch": "v0.1.5",
+  "xrservice_branch": "v0.1.6",
   "xrservice_cmake_flags": {},
   "opencomposite_path": "",
   "opencomposite_repo": null,

@@ -1,21 +1,26 @@
 #!/usr/bin/env python3
-"""Add the 'CV1 Fusion (RiftLinux 0.1.5)' profile to Envision's config.
+"""Add a 'CV1 Fusion (RiftLinux <tag>)' profile to Envision's config.
 
-Appends a Monado profile that builds RiftLinux 0.1.5 (tag v0.1.5) with Xrizer to
-~/.config/envision/envision.json. Close Envision before running. Backs up the
-config first and is idempotent (won't add a duplicate by name).
+Appends a Monado profile that builds a pinned RiftLinux release tag with Xrizer
+to ~/.config/envision/envision.json. Close Envision before running. Backs up the
+config first and is idempotent per tag (won't add a duplicate of the same tag).
 
 Usage:
-    python3 add-profile.py
+    python3 add-profile.py            # default tag v0.1.6
+    python3 add-profile.py v0.1.5     # or any RiftLinux release tag
 """
-import json, os, sys, uuid, shutil, datetime
+import json, os, re, sys, uuid, shutil, datetime
 
-NAME = "CV1 Fusion (RiftLinux 0.1.5)"
+DEFAULT_TAG = "v0.1.6"
 CFG = os.path.expanduser("~/.config/envision/envision.json")
 SHARE = os.path.expanduser("~/.local/share/envision")
 
 
 def main():
+    tag = sys.argv[1] if len(sys.argv) > 1 else DEFAULT_TAG
+    if not re.fullmatch(r"v\d+\.\d+\.\d+", tag):
+        sys.exit(f"Tag should look like v0.1.6, got: {tag!r}")
+    name = f"CV1 Fusion (RiftLinux {tag.lstrip('v')})"
     if not os.path.exists(CFG):
         sys.exit(f"Envision config not found at {CFG} — is Envision installed and run at least once?")
 
@@ -24,8 +29,8 @@ def main():
 
     cfg.setdefault("user_profiles", [])
     for p in cfg["user_profiles"]:
-        if p.get("name") == NAME:
-            sys.exit(f"Profile already exists: {p['uuid']} ({NAME})")
+        if p.get("name") == name:
+            sys.exit(f"Profile already exists: {p['uuid']} ({name})")
 
     # back up first
     stamp = datetime.datetime.now().strftime("%Y%m%d-%H%M%S")
@@ -38,11 +43,11 @@ def main():
 
     profile = {
         "uuid": u,
-        "name": NAME,
+        "name": name,
         "xrservice_type": "Monado",
         "xrservice_path": os.path.join(base, "xrservice"),
         "xrservice_repo": "https://github.com/AIIX/RiftLinux.git",
-        "xrservice_branch": "v0.1.5",
+        "xrservice_branch": tag,
         "xrservice_cmake_flags": {},
         "opencomposite_path": "",
         "opencomposite_repo": None,
@@ -68,7 +73,7 @@ def main():
         "prefix": prefix,
         "is_system_profile": False,
         "editable": True,
-        "pull_on_build": False,   # pinned to the v0.1.5 tag
+        "pull_on_build": False,   # pinned to the chosen tag
         "lighthouse_driver": "Vive",
         "xrservice_launch_options": "",
         "skip_dependency_check": False,
@@ -79,7 +84,7 @@ def main():
         json.dump(cfg, f, indent=2)
 
     print(f"Backed up config to: {backup}")
-    print(f"Added profile '{NAME}'  uuid={u}")
+    print(f"Added profile '{name}'  uuid={u}")
     print("Open Envision, select it, Build profile, then Start.")
 
 
